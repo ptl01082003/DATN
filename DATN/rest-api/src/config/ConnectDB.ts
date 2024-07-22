@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import bcrypt from "bcrypt";
 import path from "path";
 import { Sequelize } from "sequelize-typescript";
@@ -7,12 +8,21 @@ import { ROLE_TYPES, Roles } from "../models/Roles";
 export async function connectDB() {
   const sequelize = new Sequelize({
     logging: false,
+=======
+import path from "path";
+import { Sequelize } from "sequelize-typescript";
+
+export async function connectDB() {
+  const sequelize = new Sequelize({
+    logging: true,
+>>>>>>> bdcea29a8e7c2912d0b711365514a0ed4c831d80
     dialect: "mysql",
     host: process.env["DB_HOST"],
     database: process.env["DB_NAME"],
     password: process.env["DB_PASSWORD"],
     username: process.env["DB_USER"],
     models: [path.resolve("./src/models")],
+<<<<<<< HEAD
     timezone: "+07:00",
     dialectOptions: {
       timezone: "+07:00",
@@ -34,6 +44,9 @@ export async function connectDB() {
   //   rolesId: 3,
   // });
 
+=======
+  });
+>>>>>>> bdcea29a8e7c2912d0b711365514a0ed4c831d80
   await sequelize.authenticate();
   await sequelize.sync({ force: false });
   console.log("Connection has been established successfully.");
