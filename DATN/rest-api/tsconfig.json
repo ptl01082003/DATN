@@ -15,6 +15,7 @@
     "resolveJsonModule": true,
     "sourceMap": true
   },
+<<<<<<< HEAD
   "include": [
     "src/**/*.ts",
     "src/models/ProductLine"
@@ -23,3 +24,8 @@
     "node_modules"
   ]
 }
+=======
+  "include": ["src/**/*.ts", "src/models/ProductLine"],
+  "exclude": ["node_modules"]
+}
+>>>>>>> d5ec987368556be803d728e84b2b175a87fe43e4
