@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ptl01082003/shop_shoes.git"
+    "url": "https://github.com/ptl01082003/DATN.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ptl01082003/shop_shoes/issues"
+    "url": "https://github.com/ptl01082003/DATN/issues"
   },
-  "homepage": "https://github.com/ptl01082003/shop_shoes#readme",
+  "homepage": "https://github.com/ptl01082003/DATN#readme",
   "dependencies": {
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
