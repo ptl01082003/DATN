@@ -1,8 +1,7 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/ConnectDB copy";
 import { Product } from "./Product";
-import Size from "./Size";
-
+import Size from "./Sizes";
 
 // Định nghĩa các thuộc tính của Thuong Hiệu
 interface ProductDetailsAttributes {
@@ -13,29 +12,29 @@ interface ProductDetailsAttributes {
   TrangThai?: boolean;
   NgayTao?: Date;
   NgayCapNhap?: Date;
-  
 }
 
 //   public readonly MauSac?: Colour;
-  // public readonly DongSP?: ProductDetailsLine;
-  // public readonly KieuDang?: Style;
-  // public readonly ChatLieu?: Material;
-  // public readonly XuatXu?: Origin;
+// public readonly DongSP?: ProductDetailsLine;
+// public readonly KieuDang?: Style;
+// public readonly ChatLieu?: Material;
+// public readonly XuatXu?: Origin;
 
 // Một số thuộc tính không bắt buộc khi tạo Thuong Hiệu
-interface ProductDetailsCreationAttributes extends Optional<ProductDetailsAttributes, "id"> {}
+interface ProductDetailsCreationAttributes
+  extends Optional<ProductDetailsAttributes, "id"> {}
 
 class ProductDetails
   extends Model<ProductDetailsAttributes, ProductDetailsCreationAttributes>
   implements ProductDetailsAttributes
 {
-    id!: string;
-    SanPham?: string;
-    Size?: number;
-    SoLuong?: string;
-    TrangThai?: boolean;
-    NgayTao?: Date;
-    NgayCapNhap?: Date;
+  id!: string;
+  SanPham?: string;
+  Size?: number;
+  SoLuong?: string;
+  TrangThai?: boolean;
+  NgayTao?: Date;
+  NgayCapNhap?: Date;
 }
 
 ProductDetails.init(
@@ -48,39 +47,33 @@ ProductDetails.init(
     },
     SanPham: {
       type: DataTypes.STRING(36),
-        allowNull: true, // Sử dụng UUID cho id,
+      allowNull: true, // Sử dụng UUID cho id,
       field: "SanPham",
-      
     },
     Size: {
       type: DataTypes.FLOAT,
-        allowNull: true, // Sử dụng UUID cho id
+      allowNull: true, // Sử dụng UUID cho id
       field: "Size",
-     
     },
     SoLuong: {
       type: DataTypes.BIGINT,
-        allowNull: true, // Sử dụng UUID cho id
+      allowNull: true, // Sử dụng UUID cho id
       field: "SoLuong",
-     
     },
     TrangThai: {
       type: DataTypes.BOOLEAN,
-        allowNull: true, // Sử dụng UUID cho id
+      allowNull: true, // Sử dụng UUID cho id
       field: "TrangThai",
-    
     },
     NgayTao: {
       type: DataTypes.DATE,
-        allowNull: true, // Sử dụng UUID cho id
+      allowNull: true, // Sử dụng UUID cho id
       field: "ngaytao",
-     
     },
     NgayCapNhap: {
       type: DataTypes.DATE,
-        allowNull: true, // Sử dụng UUID cho id
+      allowNull: true, // Sử dụng UUID cho id
       field: "ngaycapnhap",
-      
     },
   },
   {
@@ -96,4 +89,4 @@ ProductDetails.init(
 ProductDetails.belongsTo(Product, { foreignKey: "SanPham", as: "SanPhamEXEC" });
 ProductDetails.belongsTo(Size, { foreignKey: "Size", as: "SizeEXEC" });
 
-export default ProductDetails ;
+export default ProductDetails;
