@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Origins } from "../models/Origins";
 import { Op } from "sequelize";
-
+//hoang
 const OriginsController = {
   addOrigin: async (req: Request, res: Response, next: NextFunction) => {
     try {

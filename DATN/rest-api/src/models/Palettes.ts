@@ -5,7 +5,7 @@ import {
   PrimaryKey,
   Table,
 } from "sequelize-typescript";
-
+//hoang
 @Table({
   tableName: "palettes",
   modelName: "Palettes",
@@ -17,5 +17,5 @@ export class Palettes extends Model {
   public colorCode!: string;
 
   @Column
-  public colorName!: string;
+  public name!: string;
 }
