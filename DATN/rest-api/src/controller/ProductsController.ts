@@ -9,7 +9,7 @@ import { Origins } from "../models/Origins";
 import { Styles } from "../models/Styles";
 import { Brands } from "../models/Brands";
 import { Op } from "sequelize";
-
+//the
 const ProductsController = {
   addProduct: async (req: Request, res: Response, next: NextFunction) => {
     try {

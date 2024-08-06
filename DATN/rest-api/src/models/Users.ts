@@ -11,7 +11,7 @@ import {
 } from "sequelize-typescript";
 import { generateUniqueUserId } from "../utils/utils";
 import { Roles } from "./Roles";
-
+//the
 @Table({
   tableName: "users",
   modelName: "Users",

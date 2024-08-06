@@ -5,7 +5,7 @@ import {
   PrimaryKey,
   Table,
 } from "sequelize-typescript";
-//hoang
+
 @Table({
   tableName: "origins",
   modelName: "Origins",

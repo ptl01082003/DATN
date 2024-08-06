@@ -1,55 +1,22 @@
-import { DataTypes, Model, Optional } from "sequelize";
-import sequelize from "../config/ConnectDB copy";
+import {
+  AutoIncrement,
+  Column,
+  Model,
+  PrimaryKey,
+  Table,
+} from "sequelize-typescript";
 
-// Định nghĩa các thuộc tính của Chất liệu
-interface MaterialAttributes {
-  id: string;
-  Ten?: string;
-  NgayTao?: Date;
-  NgayCapNhat?: Date;
+@Table({
+  tableName: "materials",
+  modelName: "Materials",
+  timestamps: true,
+})
+export class Materials extends Model {
+  @PrimaryKey
+  @AutoIncrement
+  @Column
+  public materialId!: number;
+
+  @Column
+  public name!: string;
 }
-
-// Một số thuộc tính không bắt buộc khi tạo Thuong Hiệu
-interface MaterialCreationAttributes extends Optional<MaterialAttributes, "id"> {}
-
-class Material extends Model<MaterialAttributes, MaterialCreationAttributes> implements MaterialAttributes {
-  public id!: string;
-  public Ten?: string;
-  public NgayTao?: Date;
-  public NgayCapNhat?: Date;
-}
-
-Material.init({
-    id: {
-      type: DataTypes.STRING(36),
-      defaultValue: DataTypes.UUIDV4, // Sử dụng UUID cho id
-      primaryKey: true,
-      field: 'id',
-    },
-    Ten: {
-      type: DataTypes.STRING(200),
-      allowNull: true, // `Ten` là không bắt buộc
-      field: 'Ten',
-    },
-    NgayTao: {
-      type: DataTypes.DATE,
-      allowNull: true, // Có thể để null nếu không bắt buộc
-      field: 'NgayTao',
-    },
-    NgayCapNhat: {
-      type: DataTypes.DATE,
-      allowNull: true, // Có thể để null nếu không bắt buộc
-      field: 'NgayCapNhat',
-    },
-  
-  },
-  {
-    sequelize,
-    tableName: "ChatLieu",
-    timestamps: false, // Không  Cho phép Sequelize sử dụng các cột createdAt và updatedAt
-    // createdAt: 'createdAt', // Tên cột createdAt trong cơ sở dữ liệu
-    // updatedAt: 'updatedAt', // Tên cột updatedAt trong cơ sở dữ liệu
-  }
-);
-
-export default Material;

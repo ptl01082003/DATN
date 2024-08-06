@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Brands } from "../models/Brands";
 import { Users } from "../models/Users";
-
+//the
 const UserController = {
   getInfo: async (req: Request, res: Response, next: NextFunction) => {
     try {

@@ -6,7 +6,7 @@ import {
   PrimaryKey,
   Table,
 } from "sequelize-typescript";
-
+//the
 @Table({
   tableName: "vouchers",
   modelName: "Vouchers",

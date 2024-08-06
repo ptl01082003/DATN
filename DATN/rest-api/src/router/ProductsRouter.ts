@@ -1,7 +1,7 @@
 // routes/productsRoutes.ts
 import express from "express";
 import ProductsController from "../controller/ProductsController";
-
+//the
 const productsRouter = express.Router();
 
 productsRouter.post("/lst-products", ProductsController.getLstProducts);

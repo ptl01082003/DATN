@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { Vouchers } from "../models/Vouchers";
-
+//the
 const VoucherController = {
   // CREATE - Add a new voucher
   addVoucher: async (req: Request, res: Response, next: NextFunction) => {

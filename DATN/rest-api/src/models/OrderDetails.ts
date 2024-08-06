@@ -1,80 +1,61 @@
-import { DataTypes, Model, Optional } from "sequelize";
-import sequelize from "../config/ConnectDB copy";
-import { Product } from "./Product";
-import ProductDetails from "./ProductDetails";
-import Order from "./Order";
+import {
+  AutoIncrement,
+  BeforeCreate,
+  BelongsTo,
+  Column,
+  DataType,
+  Default,
+  ForeignKey,
+  HasMany,
+  Model,
+  PrimaryKey,
+  Table,
+} from "sequelize-typescript";
+import { OrderItems } from "./OrderItems";
+import { Users } from "./Users";
+import { v4 as uuidv4 } from "uuid";
 
-// Định nghĩa các thuộc tính của Thuong Hiệu
-interface OrderDetailsAttributes {
-  id: string;
-  DonHang?: string;
-  ChiTietSanPham?: string;
-  SoLuong?: number;
-  DonGia?: number;
-  DonGiaSauGiam?: number;
-}
+@Table({
+  tableName: "order_details",
+  modelName: "OrderDetails",
+  timestamps: true,
+})
+export class OrderDetails extends Model {
+  @PrimaryKey
+  @AutoIncrement
+  @Column
+  public orderDetailId!: number;
 
-// Một số thuộc tính không bắt buộc khi tạo Thuong Hiệu
-interface OrderDetailsCreationAttributes
-  extends Optional<OrderDetailsAttributes, "id"> {}
+  @Column
+  public totals!: number;
 
-class OrderDetails
-  extends Model<OrderDetailsAttributes, OrderDetailsCreationAttributes>
-  implements OrderDetailsAttributes
-{
-  public id!: string;
-  public DonHang?: string;
-  public ChiTietSanPham?: string;
-  public SoLuong?: number;
-  public DonGia?: number;
-  public DonGiaSauGiam?: number;
-}
+  @Column
+  public orderCode!: string;
 
-OrderDetails.init(
-  {
-    id: {
-      type: DataTypes.STRING(255),
-      defaultValue:DataTypes.UUIDV4,
-      primaryKey: true,
-      field: "id",
-    },
-    DonHang: {
-      type: DataTypes.STRING(50),
-      allowNull: true, // `Ten` là không bắt buộc
-      field: "DonHang",
-    },
-    ChiTietSanPham: {
-      type: DataTypes.STRING(36),
-      allowNull: true, // Có thể để null nếu không bắt buộc
-      field: "ChiTietSanPham",
-    },
-    SoLuong: {
-      type: DataTypes.INTEGER,
-      allowNull: true, // Có thể để null nếu không bắt buộc
-      field: "SoLuong",
-    },
-    DonGia: {
-      type: DataTypes.DECIMAL(38,2),
-      allowNull: true,
-      field: "dongia",
-    },
-    DonGiaSauGiam: {
-      type: DataTypes.DECIMAL(38,2),
-      allowNull: true, // `Ten` là không bắt buộc
-      field: "dongiasaugiam",
-    },
-  },
-  {
-    sequelize,
-    modelName: "OrderDetails",
-    tableName: "chitietdonhang",
-    timestamps: false, // Không  Cho phép Sequelize sử dụng các cột createdAt và updatedAt
-    // createdAt: 'createdAt', // Tên cột createdAt trong cơ sở dữ liệu
-    // updatedAt: 'updatedAt', // Tên cột updatedAt trong cơ sở dữ liệu
+  @Column
+  public amount!: number;
+
+  @Column
+  public name!: string;
+
+  @Column(DataType.STRING(500))
+  public address!: string;
+
+  @Column
+  public phone!: string;
+
+  @ForeignKey(() => Users)
+  @Column
+  public userId!: number;
+
+  @BelongsTo(() => Users)
+  public user!: Users;
+
+  @HasMany(() => OrderItems)
+  public orderItems!: OrderItems[];
+
+  @BeforeCreate
+  static genaratorOrderCode(instance: OrderDetails) {
+    instance.orderCode = uuidv4().slice(0, 8).toUpperCase();
   }
-);
-
-OrderDetails.belongsTo(ProductDetails, { foreignKey: "ChiTietSanPham", as: "ChiTietSanPhamEXEC" });
-OrderDetails.belongsTo(Order, { foreignKey: "DonHang", as: "DonHangEXEC" });
-
-export default OrderDetails;
+}
