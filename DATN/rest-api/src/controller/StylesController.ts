@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Styles } from "../models/Styles";
 import { Op } from "sequelize";
-
+//hoang
 const StylesController = {
   addStyle: async (req: Request, res: Response, next: NextFunction) => {
     try {
