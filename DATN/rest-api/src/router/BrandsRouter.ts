@@ -3,7 +3,7 @@ import BrandsController from "../controller/BrandsController";
 import { ROLE_TYPES } from "../models/Roles";
 import { checkAuth } from "../middleware/checkAuth";
 import { checkRoles } from "../middleware/checkRoles";
-
+//quang
 const routerBrands = express.Router();
 
 routerBrands.post("/", BrandsController.getBrands);

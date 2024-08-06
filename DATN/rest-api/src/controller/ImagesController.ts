@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Images } from "../models/Images";
 import { Products } from "../models/Products";
 import { Op } from "sequelize";
-
+//quang
 const ImagesController = {
   addImage: async (req: Request, res: Response, next: NextFunction) => {
     try {

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { RESPONSE_CODE, ResponseBody } from "../constants";
 import { ProductDetails } from "../models/ProductDetails";
 import { Sizes } from "../models/Sizes";
-
+//quang
 const SizeController = {
   createSize: async (req: Request, res: Response, next: NextFunction) => {
     try {

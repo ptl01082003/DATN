@@ -4,7 +4,7 @@ import ImagesController from "../controller/ImagesController";
 import { checkAuth } from "../middleware/checkAuth";
 import { checkRoles } from "../middleware/checkRoles";
 import { ROLE_TYPES } from "../models/Roles";
-
+//quang
 const routerImage = express.Router();
 
 routerImage.post("/", ImagesController.getImages);

@@ -3,7 +3,7 @@ import SizesController from "../controller/SizeController";
 import { checkAuth } from "../middleware/checkAuth";
 import { checkRoles } from "../middleware/checkRoles";
 import { ROLE_TYPES } from "../models/Roles";
-
+//quang
 const routerSize = Router();
 routerSize.post("/", SizesController.getAllSizes);
 

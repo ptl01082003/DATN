@@ -5,7 +5,7 @@ import {
   PrimaryKey,
   Table,
 } from "sequelize-typescript";
-
+//quang
 @Table({
   tableName: "brands",
   modelName: "Brands",
@@ -15,8 +15,8 @@ export class Brands extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column
-  public brandID!: number;
+  public brandId!: number;
 
   @Column
-  public brandName!: string;
+  public name!: string;
 }
