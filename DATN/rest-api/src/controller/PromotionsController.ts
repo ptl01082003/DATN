@@ -1,103 +1,154 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
+import { RESPONSE_CODE, ResponseBody } from "../constants";
 import { Promotions } from "../models/Promotions";
 
 const PromotionsController = {
-  // Thêm một promotion mới
   addPromotion: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { name, discount, startDay, endDay, status } = req.body;
-
-      // Kiểm tra dữ liệu đầu vào
-      if (!name || discount == null || !startDay || !endDay || status == null) {
-        return res.status(400).json({ message: "Thiếu các trường bắt buộc" });
-      }
-
-      const promotions = await Promotions.create({
+      const { name, discountPrice, startDay, endDay, productId, status } =
+        req.body;
+      const promotion = await Promotions.create({
         name,
-        discount,
-        startDay,
-        endDay,
+        discountPrice,
+        startDay: startDay ? new Date(startDay) : undefined,
+        endDay: endDay ? new Date(endDay) : undefined,
+        productId,
         status,
       });
-
-      res.json({ data: promotions, message: "Thêm promotion mới thành công" });
+      res.json(
+        ResponseBody({
+          code: RESPONSE_CODE.SUCCESS,
+          data: promotion,
+          message: "Thực hiện thành công",
+        })
+      );
     } catch (error) {
-      console.log(error);
       next(error);
     }
   },
 
-  // Lấy tất cả promotions
   getPromotions: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const promotions = await Promotions.findAll();
-      res.json({ data: promotions });
+      res.json(
+        ResponseBody({
+          code: RESPONSE_CODE.SUCCESS,
+          data: promotions,
+          message: "Thực hiện thành công",
+        })
+      );
     } catch (error) {
-      console.error("Lỗi khi lấy promotions:", error);
       next(error);
     }
   },
 
-  // Lấy promotion theo Id
-  getPromotionById: async (req: Request, res: Response, next: NextFunction) => {
+  getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { promotionId } = req.params;
-      const promotions = await Promotions.findByPk(promotionId);
-      if (promotions) {
-        res.json({ data: promotions });
+      const { promotionId } = req.body;
+      const promotion = await Promotions.findByPk(promotionId);
+      if (promotion) {
+        res.status(200).json(
+          ResponseBody({
+            code: RESPONSE_CODE.SUCCESS,
+            data: promotion,
+            message: "Thực hiện thành công",
+          })
+        );
       } else {
-        res.status(404).json({ message: "Không tìm thấy promotion" });
+        res.status(404).json(
+          ResponseBody({
+            code: RESPONSE_CODE.NOT_FOUND,
+            message: "Khuyến mãi không tồn tại",
+          })
+        );
       }
     } catch (error) {
-      console.log(error);
-      next(error);
+      let errorMessage = "Thực hiện thất bại";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      res.status(500).json(
+        ResponseBody({
+          code: RESPONSE_CODE.ERRORS,
+          message: "Thực hiện thất bại",
+        })
+      );
     }
   },
 
-  // Cập nhật promotion
   updatePromotion: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { promotionId } = req.params;
-      const { name, discount, startDay, endDay, status } = req.body;
-
-      // Kiểm tra dữ liệu đầu vào
-      if (!name || discount == null || !startDay || !endDay || status == null) {
-        return res.status(400).json({ message: "Thiếu các trường bắt buộc" });
-      }
-
-      const promotions = await Promotions.findByPk(promotionId);
-      if (promotions) {
-        await promotions.update({
+      const {
+        promotionId,
+        name,
+        discountPrice,
+        startDay,
+        endDay,
+        productId,
+        status,
+      } = req.body;
+      const promotion = await Promotions.findByPk(promotionId);
+      if (promotion) {
+        await promotion.update({
           name,
-          discount,
-          startDay,
-          endDay,
+          discountPrice,
+          startDay: startDay ? new Date(startDay) : undefined,
+          endDay: endDay ? new Date(endDay) : undefined,
+          productId,
           status,
         });
-        res.json({ message: "Cập nhật promotion thành công" });
+        res.status(200).json(
+          ResponseBody({
+            code: RESPONSE_CODE.SUCCESS,
+            data: promotion,
+            message: "Thực hiện thành công",
+          })
+        );
       } else {
-        res.status(404).json({ message: "Không tìm thấy promotion" });
+        res.status(404).json(
+          ResponseBody({
+            code: RESPONSE_CODE.NOT_FOUND,
+            message: "Khuyến mãi không tồn tại",
+          })
+        );
       }
     } catch (error) {
-      console.log(error);
       next(error);
     }
   },
 
-  // Xóa promotion
   deletePromotion: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { promotionId } = req.params;
-      const promotions = await Promotions.findByPk(promotionId);
-      if (promotions) {
-        await promotions.destroy();
-        res.json({ message: "Xóa promotion thành công" });
+      const { promotionId } = req.body;
+      console.log(promotionId);
+      const promotion = await Promotions.findByPk(promotionId);
+      if (promotion) {
+        await promotion.destroy();
+        res.status(200).json(
+          ResponseBody({
+            code: RESPONSE_CODE.SUCCESS,
+            message: "Thực hiện thành công",
+          })
+        );
       } else {
-        res.status(404).json({ message: "Không tìm thấy promotion" });
+        res.status(404).json(
+          ResponseBody({
+            code: RESPONSE_CODE.NOT_FOUND,
+            message: "Khuyến mãi không tồn tại",
+          })
+        );
       }
     } catch (error) {
-      console.log(error);
-      next(error);
+      let errorMessage = "Thực hiện thất bại";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      res.status(500).json(
+        ResponseBody({
+          code: RESPONSE_CODE.ERRORS,
+          message: "Thực hiện thất bại",
+        })
+      );
     }
   },
 };

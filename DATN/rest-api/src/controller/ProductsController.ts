@@ -9,7 +9,10 @@ import { Origins } from "../models/Origins";
 import { Styles } from "../models/Styles";
 import { Brands } from "../models/Brands";
 import { Op } from "sequelize";
-//the
+import { Reviewers } from "../models/Reviewers";
+import { Users } from "../models/Users";
+import { ReviewerPhoto } from "../models/ReviewerPhoto";
+
 const ProductsController = {
   addProduct: async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -250,6 +253,22 @@ const ProductsController = {
           attributes: ["path"],
         });
 
+        const reviewers = await Reviewers.findAll({
+          where: { productId: products.productId },
+          attributes: ["contents", "stars", "reviewerId", "createdAt"],
+          order: [["createdAt", "DESC"]],
+          include: [
+            {
+              model: Users,
+              attributes: ["fullName"],
+            },
+            {
+              model: ReviewerPhoto,
+              attributes: ["path"],
+            },
+          ],
+        });
+
         res.json({
           message: "Thực hiện thành công",
           code: RESPONSE_CODE.SUCCESS,
@@ -257,6 +276,7 @@ const ProductsController = {
             gallery,
             sizes,
             ...products.toJSON(),
+            reviewers,
           },
         });
       } else {
@@ -422,6 +442,66 @@ const ProductsController = {
       res.json({
         code: RESPONSE_CODE.SUCCESS,
         message: "Thực hiện thành công",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  getDiscountedProducts: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const products = await Products.findAll({
+        where: { finalPrice: { [Op.ne]: null } }, // Lọc những sản phẩm đã được cập nhật giá
+        include: [
+          {
+            model: Materials,
+            attributes: ["name"],
+          },
+          {
+            model: Origins,
+            attributes: ["name"],
+          },
+          {
+            model: Styles,
+            attributes: ["name"],
+          },
+          {
+            model: Brands,
+            attributes: ["name"],
+          },
+          {
+            model: Images,
+            attributes: ["path"],
+          },
+        ],
+      });
+
+      const transferData = [];
+
+      for await (const product of products) {
+        const productDetails = await ProductDetails.findAll({
+          where: { productId: product.productId },
+          attributes: ["sizeId", "quantity"],
+          include: [{ model: Sizes, attributes: ["name"] }],
+        });
+
+        const productDetailsLevel = productDetails.map((detail) =>
+          detail.get({ plain: true })
+        );
+
+        transferData.push({
+          ...product.toJSON(),
+          productDetails: productDetailsLevel,
+        });
+      }
+
+      res.json({
+        message: "Thực hiện thành công",
+        code: RESPONSE_CODE.SUCCESS,
+        data: transferData,
       });
     } catch (error) {
       next(error);

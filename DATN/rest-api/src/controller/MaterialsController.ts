@@ -8,13 +8,15 @@ const MaterialsController = {
     try {
       const { name } = req.body;
       const material = await Materials.create({ name });
-      res.json(ResponseBody({
-        data: material,
-        code: RESPONSE_CODE.SUCCESS,
-        message: "Thực hiện thành công",
-      }));
+      res.json(
+        ResponseBody({
+          data: material,
+          code: RESPONSE_CODE.SUCCESS,
+          message: "Thực hiện thành công",
+        })
+      );
     } catch (error) {
-      next(error)
+      next(error);
     }
   },
 
