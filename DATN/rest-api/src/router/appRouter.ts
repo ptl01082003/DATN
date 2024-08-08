@@ -10,14 +10,15 @@ import routerMaterial from "./MaterialsRouter";
 import routerOrigin from "./OriginsRouter";
 import paymentRouter from "./PaymentOnlineRouter";
 
-import routerProductPromotion from "./ProductPromotionRouter";
-// import productsRouter from "./ProductsRouter";
 import productsRouter from "./ProductsRouter";
-import routerPromotions from "./PromotionsRouter";
+
+import ordersRouter from "./OrdersRouter";
+import routerPromotion from "./PromotitonRouter";
 import routerSize from "./SizeRouter";
 import routerStyle from "./StylesRouter";
 import { uploadRouter } from "./uploadRouter";
 import userRouter from "./UserRouter";
+import routerVouchers from "./VoucherRouter";
 
 const router = express.Router();
 
@@ -34,16 +35,16 @@ export function appRouter() {
   router.use("/origins", routerOrigin);
   router.use("/products", productsRouter);
   router.use("/materials", routerMaterial);
-  router.use("/promotions", routerPromotions);
+  router.use("/promotions", routerPromotion);
+  router.use("/vouchers", routerVouchers);
   router.use("/payment-orders", paymentRouter);
-  // router.use("/product-details", routerProductDetail);
-  router.use("/product-promotions", routerProductPromotion);
+  router.use("/orders", ordersRouter);
 
   router.use("*", (_, res) => {
     res.status(STATUS_CODE.NOT_FOUND).json(
       ResponseBody({
         code: RESPONSE_CODE.NOT_FOUND,
-        message: "Đường dẫn không tồn tại",
+        message: "Không tồn tại đường dẫn",
       })
     );
   });
