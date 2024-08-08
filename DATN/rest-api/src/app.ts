@@ -8,6 +8,10 @@ import { connectDB } from "./config/ConnectDB";
 import { redis } from "./config/ConnectRedis";
 import { RESPONSE_CODE, ResponseBody, STATUS_CODE } from "./constants";
 import { appRouter } from "./router/appRouter";
+import cron from "node-cron";
+import { Promotions, PROMOTIONS_STATUS } from "./models/Promotions";
+import { updateProductPrices } from "../src/utils/utils";
+import moment from "moment";
 
 declare global {
   namespace Express {
@@ -51,8 +55,24 @@ app.use(cookieParser());
 
 appRouter();
 
-app.use((errors: any, _: Request, res: Response) => {
-  res.json(errors);
+cron.schedule(
+  "40 21 * * *",
+  () => {
+    console.log("hello");
+  },
+  {
+    scheduled: true,
+    timezone: "Asia/Ho_Chi_Minh",
+  }
+);
+
+cron.schedule("* * * * *", async () => {
+  console.log(`Cron job bắt đầu lúc: ${new Date().toLocaleString()}`);
+  try {
+    await updateProductPrices();
+  } catch (error) {
+    console.error("Lỗi khi thực hiện cron job:", error);
+  }
 });
 
 app.use("*", (_, res) => {
