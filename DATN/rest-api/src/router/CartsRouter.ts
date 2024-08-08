@@ -4,6 +4,6 @@ import CartsController from "../controller/CartsController";
 
 const cartsRouter = express.Router();
 
-cartsRouter.post("/", CartsController.add);
+cartsRouter.post("/", CartsController.create);
 
 export default cartsRouter;

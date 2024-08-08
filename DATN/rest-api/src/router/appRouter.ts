@@ -13,7 +13,7 @@ import paymentRouter from "./PaymentOnlineRouter";
 import productsRouter from "./ProductsRouter";
 
 import ordersRouter from "./OrdersRouter";
-import routerPromotion from "./PromotitonRouter";
+import routerPromotion from "./PromotionsRouter";
 import routerSize from "./SizeRouter";
 import routerStyle from "./StylesRouter";
 import { uploadRouter } from "./uploadRouter";
