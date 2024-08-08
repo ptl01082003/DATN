@@ -1,11 +1,20 @@
 import {
   AutoIncrement,
+  BelongsTo,
   Column,
   DataType,
+  Default,
+  ForeignKey,
   Model,
   PrimaryKey,
   Table,
 } from "sequelize-typescript";
+
+export enum PROMOTIONS_STATUS {
+  PRE_START = "PRE_START",
+  ACTIVE = "ACTIVE",
+  EXPIRED = "EXPIRED",
+}
 
 @Table({
   tableName: "promotions",
@@ -21,12 +30,19 @@ export class Promotions extends Model {
   @Column
   public name!: string;
 
-  @Column(DataType.DOUBLE)
-  public discount!: number;
+  @Column //(DataType.DECIMAL(16, 2))
+  public discountPrice!: number;
+
+  @Column(DataType.DATE)
+  public startDay?: string;
+
+  @Column(DataType.DATE)
+  public endDay?: string;
+
+  @Default(PROMOTIONS_STATUS.PRE_START)
+  @Column
+  public status?: string;
 
   @Column
-  public startDay!: Date;
-
-  @Column
-  public endDay!: Date;
+  public productId!: number;
 }
