@@ -1,7 +1,7 @@
 // routes/productsRoutes.ts
 import express from "express";
 import ProductsController from "../controller/ProductsController";
-//the
+
 const productsRouter = express.Router();
 
 productsRouter.post("/lst-products", ProductsController.getLstProducts);
@@ -19,5 +19,10 @@ productsRouter.post("/create", ProductsController.addProduct);
 productsRouter.post("/edit", ProductsController.updateProduct);
 
 productsRouter.post("/remove", ProductsController.deleteProduct);
+
+productsRouter.post(
+  "/discounted-products",
+  ProductsController.getDiscountedProducts
+);
 
 export default productsRouter;

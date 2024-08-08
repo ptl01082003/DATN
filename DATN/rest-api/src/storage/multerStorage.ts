@@ -1,5 +1,3 @@
-//multer
-
 import multer from "multer";
 import { genaratorImagesId } from "../utils/utils";
 

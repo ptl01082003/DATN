@@ -2,6 +2,7 @@ import {
   AutoIncrement,
   BelongsTo,
   Column,
+  DataType,
   ForeignKey,
   Model,
   PrimaryKey,
@@ -10,7 +11,7 @@ import {
 import { Products } from "./Products";
 import { ShoppingCarts } from "./ShoppingCarts";
 import { ProductDetails } from "./ProductDetails";
-
+//long
 @Table({
   tableName: "cart_items",
   modelName: "CartItems",

@@ -1,19 +1,20 @@
 import { Router } from "express";
-import PromotionsController from "../controller/PromotionsController";
-// import productsRouter from "./ProductsRouter";
-import { checkAuth } from "../middleware/checkAuth";
+import PromotionsController from "../controller/PromotionController";
 import { checkRoles } from "../middleware/checkRoles";
 import { ROLE_TYPES } from "../models/Roles";
+import { checkAuth } from "../middleware/checkAuth";
 
-const routerPromotions = Router();
+const routerPromotion = Router();
 
-routerPromotions.post("/", PromotionsController.getPromotions);
+routerPromotion.post("/", PromotionsController.getPromotions);
 
-routerPromotions.use(checkAuth);
-routerPromotions.use(checkRoles([ROLE_TYPES.MEMBERSHIP, ROLE_TYPES.ADMIN]));
+// routerPromotion.use(checkAuth);
 
-routerPromotions.post("/create", PromotionsController.addPromotion);
-routerPromotions.post("/edit", PromotionsController.updatePromotion);
-routerPromotions.post("/remove", PromotionsController.deletePromotion);
+// routerPromotion.use(checkRoles([ROLE_TYPES.MEMBERSHIP, ROLE_TYPES.ADMIN]));
+// routerPromotion.post("/", PromotionsController.getById);
 
-export default routerPromotions;
+routerPromotion.post("/create", PromotionsController.addPromotion);
+routerPromotion.post("/edit", PromotionsController.updatePromotion);
+routerPromotion.post("/remove", PromotionsController.deletePromotion);
+
+export default routerPromotion;
