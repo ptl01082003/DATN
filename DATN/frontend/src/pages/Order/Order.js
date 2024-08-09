@@ -11,7 +11,7 @@ import { selectCarts } from "../../redux/slices/cartsSlice";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+//hoang
 const schema = yup
   .object({
     name: yup.string().required("Họ tên không được để trống"),
